@@ -18,3 +18,28 @@ abc 3
 abcd 1
 def 2
 */
+
+
+
+// C++ program to calculate the frequency
+// of each word in the given string
+ 
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+int main() {
+    map<string, int> wordFrequency;
+
+    string word;
+    while (cin >> word) {
+        wordFrequency[word]++;
+    }
+
+    for (const auto& pair : wordFrequency) {
+        cout << pair.first << " " << pair.second << "\n";
+    }
+
+    return 0;
+}
