@@ -20,7 +20,7 @@ void printSol() {
 void convert(int start, int path) {
     if (start == length && path == 4) {
         printSol();
-        return;
+        // return;
     }
 
     for (int i = 1; i <= 3; i++) {
