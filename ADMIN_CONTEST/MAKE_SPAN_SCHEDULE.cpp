@@ -33,23 +33,60 @@ Output
 18
 */
 
-#include <bits/stdc++.h>
-#define MAXN 10005
+#include <iostream>
+#include <vector>
+#include <queue>
 using namespace std;
 
-int n, m;
-int d[MAXN];
-vector<int> roll[MAXN];
+const int MAXN = 10005; // Số công việc tối đa
+vector<int> adj[MAXN]; // Đồ thị biểu diễn mối quan hệ giữa công việc
+int in_degree[MAXN]; // Bậc vào của từng công việc
+int duration[MAXN]; // Thời gian thực hiện của từng công việc
+int earliestCompletionTime[MAXN]; // Thời gian hoàn thành sớm nhất của từng công việc
 
-int main()
-{
+int main() {
+    int n, m;
     cin >> n >> m;
-    for (int i = 1; i <= n; i++)
-        cin >> d[i];
-    for (int i = 1; i <= m; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        roll[a].push_back(b);
+
+    for (int i = 1; i <= n; ++i)
+        cin >> duration[i];
+
+    // Khởi tạo đồ thị và bậc vào
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        in_degree[v]++;
     }
+
+    // Khởi tạo queue chứa các công việc có bậc vào là 0
+    queue<int> q;
+    for (int i = 1; i <= n; ++i) {
+        if (in_degree[i] == 0) {
+            q.push(i);
+            earliestCompletionTime[i] = duration[i]; // Thời gian hoàn thành sớm nhất của công việc là thời gian thực hiện
+        }
+    }
+
+    // Duyệt qua các công việc và tính thời gian hoàn thành sớm nhất
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        for (int v : adj[u]) {
+            in_degree[v]--;
+            earliestCompletionTime[v] = max(earliestCompletionTime[v], earliestCompletionTime[u] + duration[v]);
+            if (in_degree[v] == 0)
+                q.push(v);
+        }
+    }
+
+    // Tìm thời gian hoàn thành sớm nhất của dự án
+    int projectTime = 0;
+    for (int i = 1; i <= n; ++i)
+        projectTime = max(projectTime, earliestCompletionTime[i]);
+
+    cout << projectTime << endl;
+
+    return 0;
 }
