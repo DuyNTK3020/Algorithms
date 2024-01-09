@@ -1,2 +1,4 @@
 *.exe
 .vscode
+test.cpp
+input.txt
