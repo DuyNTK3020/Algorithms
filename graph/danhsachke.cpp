@@ -2,7 +2,8 @@
 using namespace std;
 
 int n, m;
-int a[1001][1001];
+vector<int> adj[1001];
+//adj la danh sach ke cua dinh i
 
 int main()
 {
@@ -11,14 +12,14 @@ int main()
     {
         int x, y;
         cin >> x >> y;
-        a[x][y] = a[y][x] = 1;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
     }
     for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j <= n; j++)
-        {
-            cout << a[i][j] << " ";
-        }
+        cout << i << ": ";
+        for (int x : adj[i])
+            cout << x << " ";
         cout << endl;
     }
     return 0;
