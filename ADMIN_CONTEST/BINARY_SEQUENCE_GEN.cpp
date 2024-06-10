@@ -55,6 +55,7 @@ void Try(int k)
 
 int main()
 {
+    cout << "hello";
     cin >> n;
     Try(0);
     return 0;
